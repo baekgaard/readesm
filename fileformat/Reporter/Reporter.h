@@ -35,6 +35,7 @@ public:
 	virtual QByteArray toQByteArray() const = 0;
 	virtual void setTitle(const QString& newtitle);
 	virtual bool allowSvg() const = 0;
+	bool isSSS();
 	void flush();
 	Reporter();
 	template <typename Arraytype>
@@ -42,18 +43,23 @@ public:
 		arrayStart(ray.numberOfBlocks(), title, defaultShown);
 		++nestLevel;
 		for(int j = 0; j < ray.numberOfBlocks(); ++j){
+			arrayElemStart(j);
 			this->writeBlock(ray[j]);
+			arrayElemEnd(j);
 		}
 		--nestLevel;
 		arrayEnd(ray.numberOfBlocks());
 	}
 protected:
 	int nestLevel;
+	bool sss; // true for reporters that prefer short, sweet and simple text (JSON)
 	QByteArray collected;
 	mutable QTextStream collector;
 	QString title;
 	virtual void subBlock(const Block& value, const QString& tag) = 0;
 	virtual void arrayStart(int count, const QString& title, bool defaultShown){}
+	virtual void arrayElemStart(int index){}
+	virtual void arrayElemEnd(int index){}
 	virtual void arrayEnd(int count){}
 };
 

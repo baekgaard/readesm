@@ -106,10 +106,19 @@ int ActivityChangeInfo::size() const {
 }
 
 void ActivityChangeInfo::printOn(Reporter & o) const {
-	o.tagValuePair(tr("activity"), activityName());
-	o.tagValuePair(tr("time"), timespan());
-	o.tagValuePair(tr("slot status"), extraString());
-	o.tagValuePair(tr("Raw data"), QString("s=%1, c=%2, p=%3, a=%4, t=%5").arg(s).arg(c).arg(p).arg(a).arg(t));
+	if (o.isSSS()) {
+		o.tagValuePair(tr("s"), s);
+		o.tagValuePair(tr("c"), c);
+		o.tagValuePair(tr("p"), p);
+		o.tagValuePair(tr("a"), a);
+		o.tagValuePair(tr("t"), t);
+		o.tagValuePair(tr("_d"), duration);
+	} else {
+		o.tagValuePair(tr("activity"), activityName());
+		o.tagValuePair(tr("time"), timespan());
+		o.tagValuePair(tr("slot status"), extraString());
+		o.tagValuePair(tr("Raw data"), QString("s=%1, c=%2, p=%3, a=%4, t=%5").arg(s).arg(c).arg(p).arg(a).arg(t));
+	}
 }
 
 bool ActivityChangeInfo::isDefaultValue() const {

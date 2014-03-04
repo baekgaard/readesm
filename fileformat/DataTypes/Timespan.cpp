@@ -17,15 +17,15 @@ QString Timespan::toString() const {
 		l %= 86400;
 	}
 	duration.append(QString("%1:%2:%3")
-		.arg(l / 3600, 1, 10, QChar('0'))
+		.arg(l / 3600, 2, 10, QChar('0'))
 		.arg((l / 60) % 60, 2, 10, QChar('0'))
 		.arg(l % 60, 2, 10, QChar('0')));
 
 	if(begin.date() == end.date()) {
 		return tr("On %1, from %2 to %3 (%4)")
-			.arg(begin.date().toString())
-			.arg(begin.time().toString())
-			.arg(end.time().toString())
+			.arg(begin.date().toString("yyyy-MM-dd"))
+			.arg(begin.time().toString("hh:mm:ss"))
+			.arg(end.time().toString("hh:mm:ss"))
 			.arg(duration);
 	} else {
 		return tr("From %1 to %2 (%4)")

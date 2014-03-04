@@ -18,6 +18,10 @@ Reporter::Reporter() : nestLevel(0), collected(), collector(&collected)
 	collector.setCodec(QTextCodec::codecForName("UTF-8"));
 }
 
+bool Reporter::isSSS(){
+   return sss;
+}
+
 void Reporter::writeBlock(const Block& value, const QString& tag){
 	++nestLevel;
 	if(tag == "" && value.title() != "") subBlock(value, value.title());

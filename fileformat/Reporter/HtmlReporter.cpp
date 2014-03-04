@@ -13,6 +13,7 @@ HtmlReporter::HtmlReporter() : Reporter(),
 	linkCollected(),
 	linkCollector(&linkCollected)
 {
+	sss = false;
 	linkCollector.setCodec(QTextCodec::codecForName("UTF-8"));
 	linkCollector << "<h3>" << tr("Content") << "</h3><ul>";
 }

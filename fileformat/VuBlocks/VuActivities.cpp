@@ -14,7 +14,7 @@ VuActivities::VuActivities(const DataPointer& filewalker) : RawVuActivities(file
 }
 
 QString VuActivities::title() const {
-	return tr("Activities on %1").arg(timeReal.date().toString());
+	return tr("Activities on %1").arg(timeReal.date().toString("yyyy-MM-dd"));
 }
 
 void VuActivities::printOn(Reporter& report) const {

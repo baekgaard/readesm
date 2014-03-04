@@ -24,6 +24,7 @@ Start the readesm executable from the command line or from the menu
 
 #include "fileformat/EsmFile.h"
 #include "fileformat/Reporter/HtmlReporter.h"
+#include "fileformat/Reporter/JSONReporter.h"
 #include "gui/mainWindow.h"
 #include "OptionParser.h"
 
@@ -88,6 +89,11 @@ int main(int argc, char** argv)
 		QString extension(outputFile.section(".",-1).toLower());
 		if(parser.get("format") == "html" || extension == "html" || extension == "htm" || extension == "xhtml") {
 			HtmlReporter rep;
+			rep << esm;
+			outData = rep.toQByteArray();
+			converted = true;
+		} else if(parser.get("format") == "json" || extension == "json") {
+			JSONReporter rep;
 			rep << esm;
 			outData = rep.toQByteArray();
 			converted = true;
