@@ -102,12 +102,12 @@ QString formatStrings::eventRecordPurpose(unsigned char etype) {
 		QT_TR_NOOP("the first event or fault having occurred after the last calibration"),
 		QT_TR_NOOP("an active/on-going event or fault")
 	};
-	if(etype <= 7) return tr(recordingPurposes[etype]);
+	if(etype <= 7) return tr(recordingPurposes[etype]).prepend("%1 - ").arg(etype);
 	else if(8 <= etype && etype <= 0x7F) {
-		return tr("RFU");
+		return tr("RFU").prepend("%1 - ").arg(etype);
 	} else if(0x80 <= etype && etype <= 0x7F) {
-		return tr("Manufacturer specific");
-	} else return tr("(err:blame programmer)");
+		return tr("Manufacturer specific").prepend("%1 - ").arg(etype);
+	} else return tr("(err:blame programmer)").prepend("%1 - ").arg(etype);
 }
 
 QString formatStrings::nationNumeric(unsigned char country) {
@@ -168,12 +168,12 @@ QString formatStrings::nationNumeric(unsigned char country) {
 		QT_TR_NOOP("Serbia"),
 		QT_TR_NOOP("Uzbekistan")
 	};
-	if(country <= 0x36) return tr(countries[country]);
+	if(country <= 0x36) return tr(countries[country]).prepend("%1 - ").arg(country);
 	if(country <= 0xFC) return tr("%1 - Reserved for future use").arg(country);
-	if(country == 0xFD) return tr("European Community");
-	if(country == 0xFE) return tr("Europe, but not EC and not registered");
-	if(country == 0xFF) return tr("outside of Europe, not registered");
-	return tr("error in nationNumeric");
+	if(country == 0xFD) return tr("European Community").prepend("%1 - ").arg(country);
+	if(country == 0xFE) return tr("Europe, but not EC and not registered").prepend("%1 - ").arg(country);
+	if(country == 0xFF) return tr("outside of Europe, not registered").prepend("%1 - ").arg(country);
+	return tr("error in nationNumeric").prepend("%1 - ").arg(country);
 }
 
 QString formatStrings::specificCondition(unsigned char scond) {
@@ -183,8 +183,8 @@ QString formatStrings::specificCondition(unsigned char scond) {
 		QT_TR_NOOP("Out of scope - End"),
 		QT_TR_NOOP("Ferry/Train crossing")
 	};
-	if(scond <= 0x3) return tr(specificConditions[scond]);
-	else return tr("RFU");
+	if(scond <= 0x3) return tr(specificConditions[scond]).prepend("%1 - ").arg(scond);
+	else return tr("RFU").prepend("%1 - ").arg(scond);
 }
 
 QString formatStrings::calibrationPurpose(unsigned char cpurp) {
@@ -195,8 +195,8 @@ QString formatStrings::calibrationPurpose(unsigned char cpurp) {
 		QT_TR_NOOP("installation: first calibration of the VU in the current vehicle"),
 		QT_TR_NOOP("periodic inspection")
 	};
-	if(cpurp <= 4) return tr(cpurps[cpurp]);
-	else return tr("(not specified)");
+	if(cpurp <= 4) return tr(cpurps[cpurp]).prepend("%1 - ").arg(cpurp);
+	else return tr("(not specified)").prepend("%1 - ").arg(cpurp);
 }
 
 QString formatStrings::controlType(unsigned char ctype) {
@@ -206,7 +206,7 @@ QString formatStrings::controlType(unsigned char ctype) {
 	if(ctype & (1 << 6)) o << tr("VU downloaded") << ", ";
 	if(ctype & (1 << 5)) o << tr("printing done") << ", ";
 	if(ctype & (1 << 4)) o << tr("display used") << ", ";
-	return rv;
+	return rv.prepend("%1 - ").arg(ctype);
 }
 
 QString formatStrings::equipmentType(unsigned char value) {
@@ -220,8 +220,8 @@ QString formatStrings::equipmentType(unsigned char value) {
 		QT_TR_NOOP("Vehicle Unit"),
 		QT_TR_NOOP("Motion Sensor")
 	};
-	if(value <= 7) return tr(vals[value]);
-	else return tr("RFU: %1").arg(value);
+	if(value <= 7) return tr(vals[value]).prepend("%1 - ").arg(value);
+	else return tr("RFU: %1").arg(value).prepend("%1 - ").arg(value);	/* TODO */
 }
 
 QString formatStrings::dailyWorkPeriod(unsigned char value) {
@@ -233,8 +233,8 @@ QString formatStrings::dailyWorkPeriod(unsigned char value) {
 		QT_TR_NOOP("Begin, related time assumed by VU"),
 		QT_TR_NOOP("End, related time assumed by VU ")
 	};
-	if(value <= 5) return tr(vals[value]);
-	else return tr("(not specified: %1)").arg(value);
+	if(value <= 5) return tr(vals[value]).prepend("%1 - ").arg(value);
+	else return tr("(not specified: %1)").arg(value).prepend("%1 - ").arg(value);	/* TODO */
 }
 
 QString formatStrings::regionNumeric(unsigned char value) {
@@ -258,8 +258,8 @@ QString formatStrings::regionNumeric(unsigned char value) {
 		QT_TR_NOOP("Navarra"),
 		QT_TR_NOOP("País Vasco")
 	};
-	if(value <= 0x11) return tr(vals[value]);
-	else return tr("Unknown region %1").arg(value);
+	if(value <= 0x11) return tr(vals[value]).prepend("%1 - ").arg(value);
+	else return tr("Unknown region %1").arg(value).prepend("%1 - ").arg(value);	/* TODO */
 }
 
 QString formatStrings::previous(const QString& now, const QString& past) {
@@ -271,7 +271,7 @@ QString formatStrings::previous(const QString& now, const QString& past, const Q
 }
 
 ///Manufacturer codes as found on dtc.jrc.it
-QString formatStrings::manufacturerCode(unsigned char code) {
+QString formatStrings::manufacturerCode(unsigned char code) {		/* TODO */
 	switch(code){
 	case 0x00: return tr("No information available");
 	case 0x01: return tr("Reserved value");
