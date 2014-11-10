@@ -1,0 +1,6 @@
+fileformat/CardBlocks/
+fileformat/DataTypes/
+fileformat/VuBlocks/
+.svn
+build/
+tags
