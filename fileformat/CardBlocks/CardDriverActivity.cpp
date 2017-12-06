@@ -20,13 +20,29 @@ typedef miniVector<int,6> activityVector;
 
 QByteArray CardDriverActivity::readCyclicData(){
 	QByteArray rv;
+	int llen;
+
+	llen = 256*cyclicData[newestRecord+2] + cyclicData[newestRecord+3];
+
+	// qDebug() << "oldestRecord: " << oldestRecord << " newestRecord: " << newestRecord;
+	// qDebug() << "len of newest record is: " << llen;
+	// qDebug() << cyclicData.toString();
+
 	if(newestRecord < oldestRecord) {
 		//just copy the circular stuff into a new vector, avoids those boundary problems
 		rv.append(cyclicData.toPointer(oldestRecord), cyclicData.size() - oldestRecord);
-		rv.append(cyclicData.toPointer(), newestRecord);
+		rv.append(cyclicData.toPointer(), newestRecord + llen);
 	} else {
-		rv.append(cyclicData.toPointer(oldestRecord), newestRecord - oldestRecord);
+		if (newestRecord + llen > cyclicData.size()) {
+			int mlen = newestRecord + llen - cyclicData.size() ;
+			rv.append(cyclicData.toPointer(oldestRecord), cyclicData.size() - oldestRecord);
+			rv.append(cyclicData.toPointer(), mlen);
+			qDebug() << "WARNING: We've got a buffer wrap-around with " << mlen << " bytes first and " << (llen - mlen) << " at the end";
+		} else {
+			rv.append(cyclicData.toPointer(oldestRecord), newestRecord - oldestRecord + llen);
+		}
 	}
+
 	return rv;
 }
 CardDriverActivity::CardDriverActivity(const DataPointer& start) : RawCardDriverActivity(start),

@@ -18,7 +18,7 @@ CardActivityDailyRecord::CardActivityDailyRecord(const DataPointer& start) : Raw
 
 int CardActivityDailyRecord::size() const {
 	if(activityRecordLength < RawCardActivityDailyRecord::staticSize){
-		qDebug() << "Size to small in CardActivityDailyRecord";
+		qDebug() << "Size " << activityRecordLength << " too small in CardActivityDailyRecord " << RawCardActivityDailyRecord::staticSize;
 		return RawCardActivityDailyRecord::staticSize;
 	}
 	if(activityRecordLength > RawCardActivityDailyRecord::staticSize + 2 * 60 * 24){
